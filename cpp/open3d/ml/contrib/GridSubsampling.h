@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <set>
 
-#include "Cloud.h"
+#include "open3d/ml/contrib/Cloud.h"
 
 using namespace std;
 

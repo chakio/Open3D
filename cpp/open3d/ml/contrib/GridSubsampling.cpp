@@ -1,5 +1,5 @@
 
-#include "GridSubsampling.h"
+#include "open3d/ml/contrib/GridSubsampling.h"
 
 void grid_subsampling(vector<PointXYZ>& original_points,
                       vector<PointXYZ>& subsampled_points,

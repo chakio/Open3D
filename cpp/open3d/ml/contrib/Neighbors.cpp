@@ -1,4 +1,4 @@
-#include "Neighbors.h"
+#include "open3d/ml/contrib/Neighbors.h"
 
 #include <nanoflann.hpp>
 

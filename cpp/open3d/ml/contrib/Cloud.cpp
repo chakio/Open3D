@@ -17,7 +17,7 @@
 //		Hugues THOMAS - 10/02/2017
 //
 
-#include "Cloud.h"
+#include "open3d/ml/contrib/Cloud.h"
 
 // Getters
 // *******

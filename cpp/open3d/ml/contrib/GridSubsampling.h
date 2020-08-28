@@ -3,6 +3,10 @@
 
 #include "open3d/ml/contrib/Cloud.h"
 
+namespace open3d {
+namespace ml {
+namespace contrib {
+
 class SampledData {
 public:
     // Elements
@@ -93,3 +97,7 @@ void batch_grid_subsampling(std::vector<PointXYZ>& original_points,
                             std::vector<int>& subsampled_batches,
                             float sampleDl,
                             int max_p);
+
+}  // namespace contrib
+}  // namespace ml
+}  // namespace open3d

@@ -1,5 +1,8 @@
-
 #include "open3d/ml/contrib/GridSubsampling.h"
+
+namespace open3d {
+namespace ml {
+namespace contrib {
 
 void grid_subsampling(std::vector<PointXYZ>& original_points,
                       std::vector<PointXYZ>& subsampled_points,
@@ -22,7 +25,8 @@ void grid_subsampling(std::vector<PointXYZ>& original_points,
     // Limits of the cloud
     PointXYZ minCorner = min_point(original_points);
     PointXYZ maxCorner = max_point(original_points);
-    PointXYZ originCorner = floor(minCorner * (1 / sampleDl)) * sampleDl;
+    PointXYZ originCorner =
+            PointXYZ::floor(minCorner * (1 / sampleDl)) * sampleDl;
 
     // Dimensions of the grid
     size_t sampleNX =
@@ -49,9 +53,9 @@ void grid_subsampling(std::vector<PointXYZ>& original_points,
 
     for (auto& p : original_points) {
         // Position of point in sample map
-        iX = (size_t)floor((p.x - originCorner.x) / sampleDl);
-        iY = (size_t)floor((p.y - originCorner.y) / sampleDl);
-        iZ = (size_t)floor((p.z - originCorner.z) / sampleDl);
+        iX = (size_t)std::floor((p.x - originCorner.x) / sampleDl);
+        iY = (size_t)std::floor((p.y - originCorner.y) / sampleDl);
+        iZ = (size_t)std::floor((p.z - originCorner.z) / sampleDl);
         mapIdx = iX + sampleNX * iY + sampleNX * sampleNY * iZ;
 
         // If not already created, create key
@@ -210,3 +214,7 @@ void batch_grid_subsampling(std::vector<PointXYZ>& original_points,
 
     return;
 }
+
+}  // namespace contrib
+}  // namespace ml
+}  // namespace open3d

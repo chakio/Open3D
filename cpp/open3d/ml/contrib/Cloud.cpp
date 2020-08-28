@@ -19,6 +19,10 @@
 
 #include "open3d/ml/contrib/Cloud.h"
 
+namespace open3d {
+namespace ml {
+namespace contrib {
+
 // Getters
 // *******
 
@@ -53,3 +57,7 @@ PointXYZ min_point(std::vector<PointXYZ> points) {
 
     return minP;
 }
+
+}  // namespace contrib
+}  // namespace ml
+}  // namespace open3d

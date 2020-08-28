@@ -29,6 +29,10 @@
 #include <unordered_map>
 #include <vector>
 
+namespace open3d {
+namespace ml {
+namespace contrib {
+
 // Point class
 // ***********
 
@@ -94,6 +98,10 @@ public:
         z *= a;
         return *this;
     }
+
+    static PointXYZ floor(const PointXYZ P) {
+        return PointXYZ(std::floor(P.x), std::floor(P.y), std::floor(P.z));
+    }
 };
 
 // Point Opperations
@@ -121,10 +129,6 @@ inline std::ostream& operator<<(std::ostream& os, const PointXYZ P) {
 
 inline bool operator==(const PointXYZ A, const PointXYZ B) {
     return A.x == B.x && A.y == B.y && A.z == B.z;
-}
-
-inline PointXYZ floor(const PointXYZ P) {
-    return PointXYZ(std::floor(P.x), std::floor(P.y), std::floor(P.z));
 }
 
 PointXYZ max_point(std::vector<PointXYZ> points);
@@ -159,3 +163,7 @@ struct PointCloud {
         return false;
     }
 };
+
+}  // namespace contrib
+}  // namespace ml
+}  // namespace open3d

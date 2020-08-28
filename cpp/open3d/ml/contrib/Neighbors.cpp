@@ -2,9 +2,9 @@
 
 #include <nanoflann.hpp>
 
-void brute_neighbors(vector<PointXYZ>& queries,
-                     vector<PointXYZ>& supports,
-                     vector<int>& neighbors_indices,
+void brute_neighbors(std::vector<PointXYZ>& queries,
+                     std::vector<PointXYZ>& supports,
+                     std::vector<int>& neighbors_indices,
                      float radius,
                      int verbose) {
     // Initialize variables
@@ -18,7 +18,7 @@ void brute_neighbors(vector<PointXYZ>& queries,
 
     // Counting vector
     int max_count = 0;
-    vector<vector<int>> tmp(queries.size());
+    std::vector<std::vector<int>> tmp(queries.size());
 
     // Search neigbors indices
     // ***********************
@@ -51,9 +51,9 @@ void brute_neighbors(vector<PointXYZ>& queries,
     return;
 }
 
-void ordered_neighbors(vector<PointXYZ>& queries,
-                       vector<PointXYZ>& supports,
-                       vector<int>& neighbors_indices,
+void ordered_neighbors(std::vector<PointXYZ>& queries,
+                       std::vector<PointXYZ>& supports,
+                       std::vector<int>& neighbors_indices,
                        float radius) {
     // Initialize variables
     // ******************
@@ -67,8 +67,8 @@ void ordered_neighbors(vector<PointXYZ>& queries,
     // Counting vector
     int max_count = 0;
     float d2;
-    vector<vector<int>> tmp(queries.size());
-    vector<vector<float>> dists(queries.size());
+    std::vector<std::vector<int>> tmp(queries.size());
+    std::vector<std::vector<float>> dists(queries.size());
 
     // Search neigbors indices
     // ***********************
@@ -111,11 +111,11 @@ void ordered_neighbors(vector<PointXYZ>& queries,
     return;
 }
 
-void batch_ordered_neighbors(vector<PointXYZ>& queries,
-                             vector<PointXYZ>& supports,
-                             vector<int>& q_batches,
-                             vector<int>& s_batches,
-                             vector<int>& neighbors_indices,
+void batch_ordered_neighbors(std::vector<PointXYZ>& queries,
+                             std::vector<PointXYZ>& supports,
+                             std::vector<int>& q_batches,
+                             std::vector<int>& s_batches,
+                             std::vector<int>& neighbors_indices,
                              float radius) {
     // Initialize variables
     // ******************
@@ -129,8 +129,8 @@ void batch_ordered_neighbors(vector<PointXYZ>& queries,
     // Counting vector
     int max_count = 0;
     float d2;
-    vector<vector<int>> tmp(queries.size());
-    vector<vector<float>> dists(queries.size());
+    std::vector<std::vector<int>> tmp(queries.size());
+    std::vector<std::vector<float>> dists(queries.size());
 
     // batch index
     int b = 0;
@@ -149,7 +149,7 @@ void batch_ordered_neighbors(vector<PointXYZ>& queries,
         }
 
         // Loop only over the supports of current batch
-        vector<PointXYZ>::iterator p_it;
+        std::vector<PointXYZ>::iterator p_it;
         int i = 0;
         for (p_it = supports.begin() + sum_sb;
              p_it < supports.begin() + sum_sb + s_batches[b]; p_it++) {
@@ -188,11 +188,11 @@ void batch_ordered_neighbors(vector<PointXYZ>& queries,
     return;
 }
 
-void batch_nanoflann_neighbors(vector<PointXYZ>& queries,
-                               vector<PointXYZ>& supports,
-                               vector<int>& q_batches,
-                               vector<int>& s_batches,
-                               vector<int>& neighbors_indices,
+void batch_nanoflann_neighbors(std::vector<PointXYZ>& queries,
+                               std::vector<PointXYZ>& supports,
+                               std::vector<int>& q_batches,
+                               std::vector<int>& s_batches,
+                               std::vector<int>& neighbors_indices,
                                float radius) {
     // Initialize variables
     // ******************
@@ -206,7 +206,8 @@ void batch_nanoflann_neighbors(vector<PointXYZ>& queries,
     // Counting vector
     int max_count = 0;
     // float d2;
-    vector<vector<pair<size_t, float>>> all_inds_dists(queries.size());
+    std::vector<std::vector<std::pair<size_t, float>>> all_inds_dists(
+            queries.size());
 
     // batch index
     int b = 0;
@@ -232,8 +233,8 @@ void batch_nanoflann_neighbors(vector<PointXYZ>& queries,
 
     // Build KDTree for the first batch element
     current_cloud.pts =
-            vector<PointXYZ>(supports.begin() + sum_sb,
-                             supports.begin() + sum_sb + s_batches[b]);
+            std::vector<PointXYZ>(supports.begin() + sum_sb,
+                                  supports.begin() + sum_sb + s_batches[b]);
     index = new my_kd_tree_t(3, current_cloud, tree_params);
     index->buildIndex();
 
@@ -253,9 +254,9 @@ void batch_nanoflann_neighbors(vector<PointXYZ>& queries,
 
             // Change the points
             current_cloud.pts.clear();
-            current_cloud.pts =
-                    vector<PointXYZ>(supports.begin() + sum_sb,
-                                     supports.begin() + sum_sb + s_batches[b]);
+            current_cloud.pts = std::vector<PointXYZ>(
+                    supports.begin() + sum_sb,
+                    supports.begin() + sum_sb + s_batches[b]);
 
             // Build KDTree of the current element of the batch
             delete index;

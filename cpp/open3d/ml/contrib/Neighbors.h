@@ -3,23 +3,21 @@
 
 #include "open3d/ml/contrib/Cloud.h"
 
-using namespace std;
-
-void ordered_neighbors(vector<PointXYZ>& queries,
-                       vector<PointXYZ>& supports,
-                       vector<int>& neighbors_indices,
+void ordered_neighbors(std::vector<PointXYZ>& queries,
+                       std::vector<PointXYZ>& supports,
+                       std::vector<int>& neighbors_indices,
                        float radius);
 
-void batch_ordered_neighbors(vector<PointXYZ>& queries,
-                             vector<PointXYZ>& supports,
-                             vector<int>& q_batches,
-                             vector<int>& s_batches,
-                             vector<int>& neighbors_indices,
+void batch_ordered_neighbors(std::vector<PointXYZ>& queries,
+                             std::vector<PointXYZ>& supports,
+                             std::vector<int>& q_batches,
+                             std::vector<int>& s_batches,
+                             std::vector<int>& neighbors_indices,
                              float radius);
 
-void batch_nanoflann_neighbors(vector<PointXYZ>& queries,
-                               vector<PointXYZ>& supports,
-                               vector<int>& q_batches,
-                               vector<int>& s_batches,
-                               vector<int>& neighbors_indices,
+void batch_nanoflann_neighbors(std::vector<PointXYZ>& queries,
+                               std::vector<PointXYZ>& supports,
+                               std::vector<int>& q_batches,
+                               std::vector<int>& s_batches,
+                               std::vector<int>& neighbors_indices,
                                float radius);

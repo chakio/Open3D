@@ -1,12 +1,12 @@
 
 #include "open3d/ml/contrib/GridSubsampling.h"
 
-void grid_subsampling(vector<PointXYZ>& original_points,
-                      vector<PointXYZ>& subsampled_points,
-                      vector<float>& original_features,
-                      vector<float>& subsampled_features,
-                      vector<int>& original_classes,
-                      vector<int>& subsampled_classes,
+void grid_subsampling(std::vector<PointXYZ>& original_points,
+                      std::vector<PointXYZ>& subsampled_points,
+                      std::vector<float>& original_features,
+                      std::vector<float>& subsampled_features,
+                      std::vector<int>& original_classes,
+                      std::vector<int>& subsampled_classes,
                       float sampleDl,
                       int verbose) {
     // Initialize variables
@@ -45,7 +45,7 @@ void grid_subsampling(vector<PointXYZ>& original_points,
 
     // Initialize variables
     size_t iX, iY, iZ, mapIdx;
-    unordered_map<size_t, SampledData> data;
+    std::unordered_map<size_t, SampledData> data;
 
     for (auto& p : original_points) {
         // Position of point in sample map
@@ -96,8 +96,8 @@ void grid_subsampling(vector<PointXYZ>& original_points,
                 subsampled_classes.push_back(
                         max_element(v.second.labels[i].begin(),
                                     v.second.labels[i].end(),
-                                    [](const pair<int, int>& a,
-                                       const pair<int, int>& b) {
+                                    [](const std::pair<int, int>& a,
+                                       const std::pair<int, int>& b) {
                                         return a.second < b.second;
                                     })
                                 ->first);
@@ -107,14 +107,14 @@ void grid_subsampling(vector<PointXYZ>& original_points,
     return;
 }
 
-void batch_grid_subsampling(vector<PointXYZ>& original_points,
-                            vector<PointXYZ>& subsampled_points,
-                            vector<float>& original_features,
-                            vector<float>& subsampled_features,
-                            vector<int>& original_classes,
-                            vector<int>& subsampled_classes,
-                            vector<int>& original_batches,
-                            vector<int>& subsampled_batches,
+void batch_grid_subsampling(std::vector<PointXYZ>& original_points,
+                            std::vector<PointXYZ>& subsampled_points,
+                            std::vector<float>& original_features,
+                            std::vector<float>& subsampled_features,
+                            std::vector<int>& original_classes,
+                            std::vector<int>& subsampled_classes,
+                            std::vector<int>& original_batches,
+                            std::vector<int>& subsampled_batches,
                             float sampleDl,
                             int max_p) {
     // Initialize variables
@@ -138,29 +138,30 @@ void batch_grid_subsampling(vector<PointXYZ>& original_points,
 
     for (b = 0; b < original_batches.size(); b++) {
         // Extract batch points features and labels
-        vector<PointXYZ> b_o_points = vector<PointXYZ>(
+        std::vector<PointXYZ> b_o_points = std::vector<PointXYZ>(
                 original_points.begin() + sum_b,
                 original_points.begin() + sum_b + original_batches[b]);
 
-        vector<float> b_o_features;
+        std::vector<float> b_o_features;
         if (original_features.size() > 0) {
-            b_o_features =
-                    vector<float>(original_features.begin() + sum_b * fdim,
-                                  original_features.begin() +
-                                          (sum_b + original_batches[b]) * fdim);
+            b_o_features = std::vector<float>(
+                    original_features.begin() + sum_b * fdim,
+                    original_features.begin() +
+                            (sum_b + original_batches[b]) * fdim);
         }
 
-        vector<int> b_o_classes;
+        std::vector<int> b_o_classes;
         if (original_classes.size() > 0) {
-            b_o_classes = vector<int>(original_classes.begin() + sum_b * ldim,
-                                      original_classes.begin() + sum_b +
-                                              original_batches[b] * ldim);
+            b_o_classes =
+                    std::vector<int>(original_classes.begin() + sum_b * ldim,
+                                     original_classes.begin() + sum_b +
+                                             original_batches[b] * ldim);
         }
 
         // Create result containers
-        vector<PointXYZ> b_s_points;
-        vector<float> b_s_features;
-        vector<int> b_s_classes;
+        std::vector<PointXYZ> b_s_points;
+        std::vector<float> b_s_features;
+        std::vector<int> b_s_classes;
 
         // Compute subsampling on current batch
         grid_subsampling(b_o_points, b_s_points, b_o_features, b_s_features,

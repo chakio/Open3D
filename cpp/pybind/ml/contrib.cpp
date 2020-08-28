@@ -32,23 +32,28 @@ namespace open3d {
 namespace ml {
 
 void pybind_contrib(py::module &m) {
-    m.def("subsample", [](py::array_t<float> points,
-                          py::array_t<float> features, py::array_t<int> classes,
-                          float sampleDl, int verbose) {
-        std::vector<contrib::PointXYZ> original_points;
-        std::vector<contrib::PointXYZ> subsampled_points;
-        std::vector<float> original_features;
-        std::vector<float> subsampled_features;
-        std::vector<int> original_classes;
-        std::vector<int> subsampled_classes;
+    py::module m_contrib = m.def_submodule("contrib");
 
-        grid_subsampling(original_points, subsampled_points, original_features,
-                         subsampled_features, original_classes,
-                         subsampled_classes, sampleDl, verbose);
+    m_contrib.def(
+            "subsample",
+            [](py::array_t<float> points, py::array_t<float> features,
+               py::array_t<int> classes, float sampleDl, int verbose) {
+                std::vector<contrib::PointXYZ> original_points;
+                std::vector<contrib::PointXYZ> subsampled_points;
+                std::vector<float> original_features;
+                std::vector<float> subsampled_features;
+                std::vector<int> original_classes;
+                std::vector<int> subsampled_classes;
 
-        return py::make_tuple(subsampled_points, subsampled_features,
-                              subsampled_classes);
-    });
+                grid_subsampling(original_points, subsampled_points,
+                                 original_features, subsampled_features,
+                                 original_classes, subsampled_classes, sampleDl,
+                                 verbose);
+
+                return py::make_tuple(subsampled_points, subsampled_features,
+                                      subsampled_classes);
+            },
+            "points"_a, "features"_a, "classes"_a, "sampleDl"_a, "verbose"_a);
 }
 
 }  // namespace ml

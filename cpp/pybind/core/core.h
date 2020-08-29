@@ -26,6 +26,7 @@
 
 #pragma once
 
+#include "open3d/core/Tensor.h"
 #include "pybind/open3d_pybind.h"
 
 namespace open3d {
